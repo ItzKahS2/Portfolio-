@@ -1,48 +1,50 @@
 // ===== Dados do portfólio =====
-// Troque pelos seus projetos reais: title, tag, desc, url (aparece na barra do navegador)
+// title, tag, desc, shots (prints do projeto)
 const PROJECTS = [
   {
-    title: "Padaria Trigo Dourado",
-    tag: "Site institucional",
-    desc: "Página para padaria de bairro com cardápio, horários e localização.",
-    url: "trigodourado.com.br"
-  },
-  {
-    title: "Camila Reis — Beauty",
-    tag: "Link na bio",
-    desc: "Mini-site com todos os links da influenciadora e portfólio de trabalhos.",
-    url: "camilareis.link"
-  },
-  {
-    title: "Estúdio Vértice",
-    tag: "Landing page",
-    desc: "Página de captação de leads para estúdio de tatuagem.",
-    url: "estudiovertice.com.br"
-  },
-  {
-    title: "João Mendes Fitness",
-    tag: "Site institucional",
-    desc: "Site para personal trainer com planos, depoimentos e agendamento.",
-    url: "joaomendes.fit"
+    title: "Helper.log",
+    tag: "Sistema web",
+    desc: "Painel para registrar e acompanhar ocorrências de entregas (NF, transportadora, status), com login e importação/exportação de planilhas XLS.",
+    shots: [
+      { label: "Painel",   src: "images/helperlog-painel.png",   alt: "Painel de ocorrências do Helper.log",   fit: "cover",   pos: "left top" },
+      { label: "Login",    src: "images/helperlog-login.png",    alt: "Tela de login do Helper.log",           fit: "cover",   pos: "center" },
+      { label: "Planilha", src: "images/helperlog-planilha.png", alt: "Planilha exportada pelo Helper.log",    fit: "contain", pos: "center" }
+    ]
   }
 ];
 
 const grid = document.getElementById('workGrid');
 PROJECTS.forEach(p => {
+  const first = p.shots[0];
   const card = document.createElement('article');
   card.className = 'work-card';
   card.innerHTML = `
-    <div class="browser-bar">
-      <span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span>
-      <span class="b-url">${p.url}</span>
+    <div class="work-media">
+      <div class="browser-bar">
+        <span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span>
+        <span class="b-url">${p.title}</span>
+      </div>
+      <div class="work-shot">
+        <img src="${first.src}" alt="${first.alt}" loading="lazy" style="object-fit:${first.fit};object-position:${first.pos}">
+      </div>
+      <div class="work-tabs">
+        ${p.shots.map((s, i) => `<button type="button" class="work-tab${i === 0 ? ' active' : ''}" data-i="${i}">${s.label}</button>`).join('')}
+      </div>
     </div>
-    <div class="work-thumb">${p.title.split(' ').map(w => w[0]).join('').slice(0,2)}</div>
     <div class="work-info">
       <span class="work-tag">${p.tag}</span>
       <h3>${p.title}</h3>
       <p>${p.desc}</p>
     </div>
   `;
+  const img = card.querySelector('.work-shot img');
+  const tabs = card.querySelectorAll('.work-tab');
+  tabs.forEach(btn => btn.addEventListener('click', () => {
+    const s = p.shots[btn.dataset.i];
+    img.src = s.src; img.alt = s.alt;
+    img.style.objectFit = s.fit; img.style.objectPosition = s.pos;
+    tabs.forEach(b => b.classList.toggle('active', b === btn));
+  }));
   grid.appendChild(card);
 });
 
