@@ -1087,3 +1087,34 @@ footer{
     height: 74px;
   }
 }
+
+/* ============ PROJETO COMPLEMENTAR ============ */
+.side-project{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  margin-top:28px;
+  padding:24px 26px;
+  background:var(--bg-charcoal);
+  border:1px solid var(--line-on-dark);
+  border-radius:14px;
+  transition:border-color .25s ease, box-shadow .25s ease;
+}
+.side-project:hover{
+  border-color:var(--accent);
+  box-shadow:0 0 24px -8px var(--glow);
+}
+.side-project-copy{ min-width:0; }
+.side-project-copy .eyebrow{ margin-bottom:8px; }
+.side-project-copy h3{ font-size:1.2rem; margin:0 0 8px; }
+.side-project-copy p{ max-width:68ch; font-size:.92rem; color:var(--muted-on-dark); }
+.side-project-link{ flex:0 0 auto; white-space:nowrap; }
+@media (max-width:600px){
+  .side-project{ flex-direction:column; align-items:stretch; gap:18px; padding:20px; }
+  .side-project-link{ width:100%; text-align:center; }
+}
+@media (hover:none){
+  .side-project:hover{ border-color:var(--line-on-dark); box-shadow:none; }
+}
+
